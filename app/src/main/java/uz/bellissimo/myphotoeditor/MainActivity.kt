@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.setPadding
 import uz.bellissimo.myphotoeditor.databinding.ActivityMainBinding
 import uz.bellissimo.myphotoeditor.databinding.ContainerViewBinding
 
@@ -27,7 +28,7 @@ class MainActivity : AppCompatActivity() {
             addViewData = AddViewData.EmojiData(R.drawable.glasses, 60.px, 30.px)
         }
         binding.addText.setOnClickListener {
-            addViewData = AddViewData.TextData("Hello world", 16.px)
+            addViewData = AddViewData.TextData("Hello world", 50.px)
         }
 
         binding.editor.setOnTouchListener { _, event ->
@@ -40,6 +41,10 @@ class MainActivity : AppCompatActivity() {
                     is AddViewData.TextData -> {
                         addView(event.x, event.y)
                     }
+
+//                    is AddViewData.ImageData -> {
+//                        addView(event.x, event.y)
+//                    }
 
                     null -> {
                         unSelect()
@@ -64,8 +69,10 @@ class MainActivity : AppCompatActivity() {
                 TextView(this).apply {
                     text = (addViewData as AddViewData.TextData).st
                     textSize = (addViewData as AddViewData.TextData).defTextSize.toFloat()
+                    setPadding(10.px)
                 }
             }
+
         }
 
         val containerBinding = ContainerViewBinding.inflate(layoutInflater, binding.editor, false)
@@ -150,11 +157,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun pickImageFromGalery(){
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        startActivityForResult(intent,1000)
-    }
+//    private fun pickImageFromGalery(){
+//        val intent = Intent(Intent.ACTION_PICK)
+//        intent.type = "image/*"
+//        startActivityForResult(intent,1000)
+//    }
+//
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if (requestCode == 1000 && resultCode == RESULT_OK)
+//            addViewData = AddViewData.ImageData(data?.data)
+//    }
 }
 
 
